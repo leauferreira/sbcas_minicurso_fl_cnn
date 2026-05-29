@@ -1,0 +1,77 @@
+import matplotlib
+matplotlib.use("TkAgg")  # ou "Agg"
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from io import StringIO
+
+# =========================
+# Dados CSV
+# =========================
+csv_data = """
+round,train_loss,train_acc,val_loss,val_acc,distributed_accuracy,global_loss,global_acc
+1,0.6204543010486091,0.8014783526927138,0.546035014214136,0.8234657168936695,0.8389830508474576,0.5879324553012848,0.832
+2,0.4753277635372931,0.8454769447377684,0.41598035908990516,0.8517217618527733,0.8629943502824858,0.47269069027900695,0.852
+3,0.4295885688358107,0.8627243928194298,0.3289490614331151,0.8940856943425268,0.8954802259887006,0.38971214020252226,0.868
+4,0.37353545605653776,0.8771559310102077,0.3175771087912123,0.8912578526300718,0.8940677966101694,0.3447895254790783,0.902
+5,0.37349059274607,0.8697641675466385,0.2790132399264451,0.9053836378930789,0.9067796610169492,0.33187784847617147,0.886
+6,0.3460586547998424,0.8817317845828934,0.2647601529322992,0.9096254004617615,0.9138418079096046,0.318099831789732,0.892
+7,0.3321893045240118,0.8820837733192538,0.2540581700986852,0.9180820790005906,0.9138418079096046,0.3150301316380501,0.892
+8,0.3231728874285932,0.8915874692009855,0.2537749646321176,0.9096030282963149,0.9152542372881356,0.2906549319922924,0.902
+9,0.33355238940337306,0.8810278071101725,0.27703423961702867,0.8954861918994864,0.9081920903954802,0.27951046538352964,0.908
+10,0.31166140846868756,0.8884195705737417,0.2666408991676791,0.9067841354500386,0.9124293785310734,0.3007704928517342,0.898
+"""
+
+# =========================
+# Carregando os dados
+# =========================
+df = pd.read_csv(StringIO(csv_data))
+
+# =========================
+# Gráfico 1: Losses
+# =========================
+plt.figure(figsize=(10, 5))
+
+plt.plot(df["round"], df["train_loss"], marker='o', label="Train Loss")
+plt.plot(df["round"], df["val_loss"], marker='s', label="Validation Loss")
+
+plt.title("Train Loss vs Validation Loss")
+plt.xlabel("Round")
+plt.ylabel("Loss")
+plt.grid(True)
+plt.legend()
+
+plt.show()
+
+# =========================
+# Gráfico 2: Accuracies
+# =========================
+plt.figure(figsize=(10, 5))
+
+plt.plot(df["round"], df["train_acc"], marker='o', label="Train Accuracy")
+plt.plot(df["round"], df["val_acc"], marker='s', label="Validation Accuracy")
+
+plt.title("Train Accuracy vs Validation Accuracy")
+plt.xlabel("Round")
+plt.ylabel("Accuracy")
+plt.grid(True)
+plt.legend()
+
+plt.show()
+
+# =========================
+# Gráfico 3: Métricas Globais
+# =========================
+plt.figure(figsize=(10, 5))
+
+plt.plot(df["round"], df["global_loss"], marker='o', label="Global Loss")
+plt.plot(df["round"], df["global_acc"], marker='s', label="Global Accuracy")
+
+plt.title("Global Loss vs Global Accuracy")
+plt.xlabel("Round")
+plt.ylabel("Metric")
+plt.grid(True)
+plt.legend()
+
+plt.show()

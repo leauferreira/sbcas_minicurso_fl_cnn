@@ -1,0 +1,48 @@
+services:
+  fl-server:
+    build: ./server
+    container_name: fl-server
+    volumes:
+      - ./server:/app
+      - ./data_sbcas/data/global_test:/app/global_test
+    ports:
+      - "8080:8080"
+    networks:
+      - fl-net
+
+  fl-client-1:
+    build: ./client
+    container_name: fl-client-1
+    volumes:
+      - ./client:/app
+      - ./data_sbcas/data/client_1:/app/data
+    depends_on:
+      - fl-server
+    networks:
+      - fl-net
+
+  fl-client-2:
+    build: ./client
+    container_name: fl-client-2
+    volumes:
+      - ./client:/app
+      - ./data_sbcas/data/client_2:/app/data
+    depends_on:
+      - fl-server
+    networks:
+      - fl-net
+
+  fl-client-3:
+    build: ./client
+    container_name: fl-client-3
+    volumes:
+      - ./client:/app
+      - ./data_sbcas/data/client_3:/app/data
+    depends_on:
+      - fl-server
+    networks:
+      - fl-net
+
+networks:
+  fl-net:
+    driver: bridge
